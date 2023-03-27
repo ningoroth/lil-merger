@@ -7,7 +7,7 @@ data_path = "./"
 if os.path.isfile(filename):
     # If the database file exists, connect to it using sqlite3
     conn = sqlite3.connect(filename)
-    print("Connected to database.")
+    print(f"Connected to database \"{filename}\"")
     conn.close()
 else:
     os.makedirs(data_path, exist_ok=True)

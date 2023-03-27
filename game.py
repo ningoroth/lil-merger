@@ -18,11 +18,11 @@ square_color_4 = (0, 255, 255)
 # Set the size and position of the squares
 square_size = 50
 square_x_1 = 100
-square_y_1 = 100
-square_x_2 = 300
+square_y_1 = 200
+square_x_2 = 200
 square_y_2 = 200
-square_x_3 = 200
-square_y_3 = 300
+square_x_3 = 300
+square_y_3 = 200
 square_x_4 = 400
 square_y_4 = 200
 

@@ -1,5 +1,6 @@
 import pygame as pg
 import random
+import json
 
 # Initialize pg
 pg.init()
@@ -8,6 +9,7 @@ pg.init()
 screen_width = 640
 screen_height = 480
 screen = pg.display.set_mode((screen_width, screen_height))
+amount = 5
 
 # Set the color of the squares
 square_color_1 = (255, 0, 0)
@@ -20,25 +22,35 @@ dragging_1 = False
 dragging_2 = False
 dragging_3 = False
 dragging_4 = False
+dragging_5 = False
+
+jason = open("./colors.json")
+jason = json.load(jason)
+print(jason)
 
 class Square:
-    def __init__(self, x, y, size, color):
+    def __init__(self, x, y, size, color, i):
         self.x = x
         self.y = y
         self.size = size
         self.color = color
+        self.i = i
 
     def draw(self):
         pg.draw.rect(screen, self.color, (self.x, self.y, self.size, self.size))
+        # TEMP #
+        font = pg.font.SysFont(None, 24)
+        img = font.render(f'{self.i}', True, "white")
+        screen.blit(img, (self.x, self.y))
 
     # create 5 squares with random positions and sizes
 squares = []
-for i in range(7):
+for i in range(amount):
     x = 100 * i
     y = 100
     size = 50
     color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-    square = Square(x, y, size, color)
+    square = Square(x, y, size, color, i)
     squares.append(square)
 
 # define collision detection function
@@ -59,61 +71,78 @@ while True:
             pg.quit()
             quit()
         
-        '''
         elif event.type == pg.MOUSEBUTTONDOWN:
             # Check if the mouse is over a square
-            if square_x["1"] < event.pos[0] < square_x["1"] + square_size and \
-               square_y["1"] < event.pos[1] < square_y["1"] + square_size:
+            if squares[0].x < event.pos[0] < squares[0].x + square.size and \
+               squares[0].y < event.pos[1] < squares[0].y + square.size:
+                
                 dragging_1 = True
                 # Calculate the offset between the mouse position and the square position
-                offset_x_1 = event.pos[0] - square_x["1"]
-                offset_y_1 = event.pos[1] - square_y["1"]
+                offset_x_1 = event.pos[0] - squares[0].x
+                offset_y_1 = event.pos[1] - squares[0].y
 
-            elif square_x["2"] < event.pos[0] < square_x["2"] + square_size and \
-                 square_y["2"] < event.pos[1] < square_y["2"] + square_size:
+            elif squares[1].x < event.pos[0] < squares[1].x + square.size and \
+                 squares[1].y < event.pos[1] < squares[1].y + square.size:
+                
                 dragging_2 = True
                 # Calculate the offset between the mouse position and the square position
-                offset_x_2 = event.pos[0] - square_x["2"]
-                offset_y_2 = event.pos[1] - square_y["2"]
+                offset_x_2 = event.pos[0] - squares[1].x
+                offset_y_2 = event.pos[1] - squares[1].y
 
-            elif square_x["3"] < event.pos[0] < square_x["3"] + square_size and \
-                 square_y["3"] < event.pos[1] < square_y["3"] + square_size:
+            elif squares[2].x < event.pos[0] < squares[2].x + square.size and \
+                 squares[2].y < event.pos[1] < squares[2].y + square.size:
+                
                 dragging_3 = True
                 # Calculate the offset between the mouse position and the square position
-                offset_x_3 = event.pos[0] - square_x["3"]
-                offset_y_3 = event.pos[1] - square_y["3"]
+                offset_x_3 = event.pos[0] - squares[2].x
+                offset_y_3 = event.pos[1] - squares[2].y
 
-            elif square_x["4"] < event.pos[0] < square_x["4"] + square_size and \
-                 square_y["4"] < event.pos[1] < square_y["4"] + square_size:
+            elif squares[3].x < event.pos[0] < squares[3].x + square.size and \
+                 squares[3].y < event.pos[1] < squares[3].y + square.size:
+                
                 dragging_4 = True
                 # Calculate the offset between the mouse position and the square position
-                offset_x_4 = event.pos[0] - square_x["4"]
-                offset_y_4 = event.pos[1] - square_y["4"]
+                offset_x_4 = event.pos[0] - squares[3].x
+                offset_y_4 = event.pos[1] - squares[3].y
+            
+            elif squares[4].x < event.pos[0] < squares[4].x + square.size and \
+                 squares[4].y < event.pos[1] < squares[4].y + square.size:
+                
+                dragging_5 = True
+                # Calculate the offset between the mouse position and the square position
+                offset_x_5 = event.pos[0] - squares[4].x
+                offset_y_5 = event.pos[1] - squares[4].y
 
         elif event.type == pg.MOUSEBUTTONUP:
             dragging_1 = False
             dragging_2 = False
             dragging_3 = False
             dragging_4 = False
+            dragging_5 = False
         elif event.type == pg.MOUSEMOTION:
             # Check if a square is being dragged
             if dragging_1:
                 # Move the first square to the mouse position with the offset
-                square_x["1"] = event.pos[0] - offset_x_1
-                square_y["1"] = event.pos[1] - offset_y_1
+                squares[0].x = event.pos[0] - offset_x_1
+                squares[0].y = event.pos[1] - offset_y_1
             elif dragging_2:
                 # Move the second square to the mouse position with the offset
-                square_x["2"] = event.pos[0] - offset_x_2
-                square_y["2"] = event.pos[1] - offset_y_2
+                squares[1].x = event.pos[0] - offset_x_2
+                squares[1].y = event.pos[1] - offset_y_2
             elif dragging_3:
                 # Move the second square to the mouse position with the offset
-                square_x["3"] = event.pos[0] - offset_x_3
-                square_y["3"] = event.pos[1] - offset_y_3
+                squares[2].x = event.pos[0] - offset_x_3
+                squares[2].y = event.pos[1] - offset_y_3
             elif dragging_4:
                 # Move the second square to the mouse position with the offset
-                square_x["4"] = event.pos[0] - offset_x_4
-                square_y["4"] = event.pos[1] - offset_y_4
-                '''
+                squares[3].x = event.pos[0] - offset_x_4
+                squares[3].y = event.pos[1] - offset_y_4
+            elif dragging_5:
+                # Move the second square to the mouse position with the offset
+                squares[4].x = event.pos[0] - offset_x_5
+                squares[4].y = event.pos[1] - offset_y_5
+    
+    screen.fill((0, 0, 0))
     
     # draw the squares
     for square in squares:
@@ -123,11 +152,14 @@ while True:
     for i in range(len(squares)):
         for j in range(i + 1, len(squares)):
             if check_collision(squares[i], squares[j]):
-                print("Collision between square", i, "and square", j)
+                if i == 2 and j == 3:
+                    print("Merge!")
+                
+                #print("Collision between square", i, "and square", j)
 
 
     # update the display
-    pg.display.flip()
+    pg.display.update()
 
 # quit pygame
 pg.quit()

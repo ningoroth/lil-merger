@@ -1,12 +1,13 @@
-import pygame
+import pygame as pg
 
-# Initialize Pygame
-pygame.init()
+# Initialize pg
+pg.init()
 
 # Set the size of the screen
 screen_width = 640
 screen_height = 480
-screen = pygame.display.set_mode((screen_width, screen_height))
+screen = pg.display.set_mode((screen_width, screen_height))
+pg.display.set_caption("Lil Merger")
 
 # Set the color of the squares
 square_color_1 = (255, 0, 0)
@@ -33,23 +34,29 @@ dragging_3 = False
 dragging_4 = False
 
 # Create the square surfaces
-square_surface_1 = pygame.Surface((square_size, square_size))
+square_surface_1 = pg.Surface((square_size, square_size))
 square_surface_1.fill(square_color_1)
-square_surface_2 = pygame.Surface((square_size, square_size))
+square_surface_2 = pg.Surface((square_size, square_size))
 square_surface_2.fill(square_color_2)
-square_surface_3 = pygame.Surface((square_size, square_size))
+square_surface_3 = pg.Surface((square_size, square_size))
 square_surface_3.fill(square_color_3)
-square_surface_4 = pygame.Surface((square_size, square_size))
+square_surface_4 = pg.Surface((square_size, square_size))
 square_surface_4.fill(square_color_4)
 
 # Game loop
 while True:
+
+    #mouse_position = pg.mouse.get_pos()
+    #print(mouse_position)
+    
     # Handle events
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            pg.quit()
             quit()
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pg.MOUSEBUTTONDOWN:
+
+            
             # Check if the mouse is over a square
             if square_x_1 < event.pos[0] < square_x_1 + square_size and \
                square_y_1 < event.pos[1] < square_y_1 + square_size:
@@ -57,21 +64,21 @@ while True:
                 # Calculate the offset between the mouse position and the square position
                 offset_x_1 = event.pos[0] - square_x_1
                 offset_y_1 = event.pos[1] - square_y_1
-
+            # Check if the mouse is over a square
             elif square_x_2 < event.pos[0] < square_x_2 + square_size and \
                  square_y_2 < event.pos[1] < square_y_2 + square_size:
                 dragging_2 = True
                 # Calculate the offset between the mouse position and the square position
                 offset_x_2 = event.pos[0] - square_x_2
                 offset_y_2 = event.pos[1] - square_y_2
-
+            # Check if the mouse is over a square
             elif square_x_3 < event.pos[0] < square_x_3 + square_size and \
                  square_y_3 < event.pos[1] < square_y_3 + square_size:
                 dragging_3 = True
                 # Calculate the offset between the mouse position and the square position
                 offset_x_3 = event.pos[0] - square_x_3
                 offset_y_3 = event.pos[1] - square_y_3
-
+            # Check if the mouse is over a square
             elif square_x_4 < event.pos[0] < square_x_4 + square_size and \
                  square_y_4 < event.pos[1] < square_y_4 + square_size:
                 dragging_4 = True
@@ -79,12 +86,22 @@ while True:
                 offset_x_4 = event.pos[0] - square_x_4
                 offset_y_4 = event.pos[1] - square_y_4
 
-        elif event.type == pygame.MOUSEBUTTONUP:
+        elif event.type == pg.MOUSEBUTTONUP:
             dragging_1 = False
             dragging_2 = False
             dragging_3 = False
             dragging_4 = False
-        elif event.type == pygame.MOUSEMOTION:
+        elif event.type == pg.MOUSEMOTION:
+
+            #if event.pos[0] < 10:
+            #    pg.mouse.set_pos((0,mouse_position[1]))
+            #elif event.pos[0] > 630:
+            #   pg.mouse.set_pos((630,mouse_position[1]))
+            #if event.pos[1] < 10:
+            #    pg.mouse.set_pos((mouse_position[0], 0))
+            #elif event.pos[1] > 470:
+            #   pg.mouse.set_pos((mouse_position[0], 470))
+
             # Check if a square is being dragged
             if dragging_1:
                 # Move the first square to the mouse position with the offset
@@ -111,6 +128,7 @@ while True:
     screen.blit(square_surface_2, (square_x_2, square_y_2))
     screen.blit(square_surface_3, (square_x_3, square_y_3))
     screen.blit(square_surface_4, (square_x_4, square_y_4))
+    
 
     # Update the screen
-    pygame.display.update()
+    pg.display.update()

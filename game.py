@@ -1,6 +1,7 @@
 import pygame as pg
 import random
 import json
+from time import *
 
 # Initialize pg
 pg.init()
@@ -42,16 +43,9 @@ class Square:
 squares = []
 
 for i in range(amount):
-    #dragging.append(False)
-    #print(dragging)
-
-    #square_colors.append(colors_dict[i]["Color"])
-    #print(square_colors)
-
     x = 100 * i
     y = 100
     size = 50
-    #colors_dict[i]["Color"]= tuple(colors_dict[i]["Color"])
     color = colors_dict[i]["Color"]
     color = tuple(color)
     print(color)
@@ -75,6 +69,7 @@ while True:
         if event.type == pg.QUIT:
             pg.quit()
             quit()
+        
         
         elif event.type == pg.MOUSEBUTTONDOWN:
             # Check if the mouse is over a square
@@ -112,8 +107,16 @@ while True:
     for i in range(len(squares)):
         for j in range(i + 1, len(squares)):
             if check_collision(squares[i], squares[j]):
-                if i == 2 and j == 3:
+                if i == 0 and j == 1 or i == 2 and j == 3:
                     print(f"Merge with square {i} and square {j}")
+                    print(len(squares))
+
+                    squares.pop(i)
+                    squares.pop(j-1)
+                    amount = len(squares)
+                    print(len(squares))
+                    break
+                    
 
 
     # update the display

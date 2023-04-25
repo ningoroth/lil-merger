@@ -9,7 +9,7 @@ pg.init()
 screen_width = 640
 screen_height = 480
 screen = pg.display.set_mode((screen_width, screen_height))
-amount = 6
+amount = 5
 
 # Set the color of the squares
 
@@ -69,8 +69,8 @@ for i in range(amount):
     offset_x.append(0)
     print(offset_x)
 
-    x = 100 * i
-    y = 100
+    x = 550
+    y = 100 * i
     size = 50
     color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
     square = Square(x, y, size, color, i)
@@ -105,40 +105,10 @@ while True:
                     offset_x[i] = event.pos[0] - squares[i].x
                     offset_y[i] = event.pos[1] - squares[i].y
                     print(offset_x, offset_y)
+                    
+                    
 
-            '''
-            elif squares[1].x < event.pos[0] < squares[1].x + square.size and \
-                 squares[1].y < event.pos[1] < squares[1].y + square.size:
-                
-                dragging[1] = True
-                # Calculate the offset between the mouse position and the square position
-                offset_x_2 = event.pos[0] - squares[1].x
-                offset_y_2 = event.pos[1] - squares[1].y
 
-            elif squares[2].x < event.pos[0] < squares[2].x + square.size and \
-                 squares[2].y < event.pos[1] < squares[2].y + square.size:
-                
-                dragging[2] = True
-                # Calculate the offset between the mouse position and the square position
-                offset_x_3 = event.pos[0] - squares[2].x
-                offset_y_3 = event.pos[1] - squares[2].y
-
-            elif squares[3].x < event.pos[0] < squares[3].x + square.size and \
-                 squares[3].y < event.pos[1] < squares[3].y + square.size:
-                
-                dragging[3] = True
-                # Calculate the offset between the mouse position and the square position
-                offset_x_4 = event.pos[0] - squares[3].x
-                offset_y_4 = event.pos[1] - squares[3].y
-            
-            elif squares[4].x < event.pos[0] < squares[4].x + square.size and \
-                 squares[4].y < event.pos[1] < squares[4].y + square.size:
-                
-                dragging[4] = True
-                # Calculate the offset between the mouse position and the square position
-                offset_x_5 = event.pos[0] - squares[4].x
-                offset_y_5 = event.pos[1] - squares[4].y
-            '''
 
         elif event.type == pg.MOUSEBUTTONUP:
             for i in range(amount):
@@ -151,27 +121,14 @@ while True:
                     # Move the first square to the mouse position with the offset
                     squares[i].x = event.pos[0] - offset_x[i]
                     squares[i].y = event.pos[1] - offset_y[i]
-            '''
-            elif dragging[1]:
-                # Move the second square to the mouse position with the offset
-                squares[1].x = event.pos[0] - offset_x_2
-                squares[1].y = event.pos[1] - offset_y_2
-            elif dragging[2]:
-                # Move the second square to the mouse position with the offset
-                squares[2].x = event.pos[0] - offset_x_3
-                squares[2].y = event.pos[1] - offset_y_3
-            elif dragging[3]:
-                # Move the second square to the mouse position with the offset
-                squares[3].x = event.pos[0] - offset_x_4
-                squares[3].y = event.pos[1] - offset_y_4
-            elif dragging[4]:
-                # Move the second square to the mouse position with the offset
-                squares[4].x = event.pos[0] - offset_x_5
-                squares[4].y = event.pos[1] - offset_y_5
-            '''
+           
     
     screen.fill((0, 0, 0))
+
+    pg.draw.rect(screen, (255, 255, 255), (500, 0, 200, 800))
+
     
+
     # draw the squares
     for square in squares:
         square.draw()
@@ -184,6 +141,7 @@ while True:
                     print("Merge!")
                 
                 #print("Collision between square", i, "and square", j)
+
 
 
     # update the display

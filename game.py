@@ -87,6 +87,7 @@ while True:
                     squares[i].offset_x = event.pos[0] - squares[i].x
                     squares[i].offset_y = event.pos[1] - squares[i].y
 
+                    # Break the loop after the first square is found under the cursor
                     break
 
         elif event.type == pg.MOUSEBUTTONUP:

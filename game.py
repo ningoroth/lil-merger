@@ -7,25 +7,33 @@ from time import *
 pg.init()
 
 # Set the size of the screen
-screen_width = 640
-screen_height = 480
+screen_width = 700
+screen_height = 500
 screen = pg.display.set_mode((screen_width, screen_height))
-amount = 6
+amount = 20
 
-# read file
-with open("./colors.json", "r") as read_file:
-    colors_dict = json.load(read_file)
+x = 0
 
-#for i in range(amount):
-#    print(colors_dict[i]["Color"])
+# Read file
+#with open("./colors.json", "r") as read_file:
+#    colors_dict = json.load(read_file)
+
+# Images
+#dirt_image = pg.image.load("./images/dirt.png")
+#water_image = pg.image.load("./images/water.png")
+temp_image = pg.image.load("./images/dirt.png")
+images = []
+#images = [dirt_image, water_image, temp_image, temp_image, temp_image, temp_image, temp_image, temp_image, temp_image, temp_image]
+for i in range(amount):
+    images.append(temp_image)
     
 
 class Square:
-    def __init__(self, x, y, size, color, i):
+    def __init__(self, x, y, size, i):
         self.x = x
         self.y = y
         self.size = size
-        self.color = color
+        #self.color = color
         self.i = i
         self.dragging = False
         self.offset_x = 0
@@ -33,7 +41,8 @@ class Square:
         
 
     def draw(self):
-        pg.draw.rect(screen, self.color, (self.x, self.y, self.size, self.size))
+        screen.blit(images[self.i], (self.x, self.y))
+        #pg.draw.rect(screen, self.color, (self.x, self.y, self.size, self.size))
         # TEMP #
         font = pg.font.SysFont(None, 24)
         img = font.render(f'{self.i}', True, "white")
@@ -43,14 +52,18 @@ class Square:
 squares = []
 
 for i in range(amount):
+
     x = 100 * i
     y = 100
     size = 50
-    color = colors_dict[i]["Color"]
-    color = tuple(color)
-    print(color)
-    square = Square(x, y, size, color, i)
-    squares.append(square)
+    if x < screen_width:
+        square = Square(x, y, size, i)
+        squares.append(square)
+    else:
+        x = 100 * (i % (screen_width // 100))
+        y += 100
+        square = Square(x, y, size, i)
+        squares.append(square)
 
 # define collision detection function
 def check_collision(square1, square2):
@@ -115,6 +128,9 @@ while True:
                     squares.pop(j-1)
                     amount = len(squares)
                     print(len(squares))
+
+                    
+                    squares.append(square)
                     break
                     
 

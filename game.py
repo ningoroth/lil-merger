@@ -9,7 +9,7 @@ pg.init()
 screen_width = 640
 screen_height = 480
 screen = pg.display.set_mode((screen_width, screen_height))
-amount = 6
+amount = 5
 
 # read file
 with open("./colors.json", "r") as read_file:
@@ -48,8 +48,8 @@ for i in range(amount):
     #square_colors.append(colors_dict[i]["Color"])
     #print(square_colors)
 
-    x = 100 * i
-    y = 100
+    x = 550
+    y = 100 * i
     size = 50
     #colors_dict[i]["Color"]= tuple(colors_dict[i]["Color"])
     color = colors_dict[i]["Color"]
@@ -104,9 +104,13 @@ while True:
     
     screen.fill((36, 41, 46))
     
+    pg.draw.rect(screen, (255, 255, 255), (500, 0, 200, 1000))
+
     # draw the squares
     for square in squares:
         square.draw()
+    
+    
     
         # check for collisions
     for i in range(len(squares)):

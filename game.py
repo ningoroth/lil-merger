@@ -1,4 +1,5 @@
 import pygame as pg
+from elements import *
 
 # Initialize pg
 pg.init()
@@ -9,39 +10,14 @@ screen_height = 480
 screen = pg.display.set_mode((screen_width, screen_height))
 pg.display.set_caption("Lil Merger")
 
-# Set the color of the squares
-square_color_1 = (255, 0, 0)
-square_color_2 = (0, 255, 0)
-square_color_3 = (255, 255, 0)
-square_color_4 = (0, 255, 255)
+x = 50
+y = 50
+size = 50
 
-
-# Set the size and position of the squares
-square_size = 50
-square_x_1 = 100
-square_y_1 = 200
-square_x_2 = 200
-square_y_2 = 200
-square_x_3 = 300
-square_y_3 = 200
-square_x_4 = 400
-square_y_4 = 200
-
-# Set the flag to check if the squares are being dragged
-dragging_1 = False
-dragging_2 = False
-dragging_3 = False
-dragging_4 = False
-
-# Create the square surfaces
-square_surface_1 = pg.Surface((square_size, square_size))
-square_surface_1.fill(square_color_1)
-square_surface_2 = pg.Surface((square_size, square_size))
-square_surface_2.fill(square_color_2)
-square_surface_3 = pg.Surface((square_size, square_size))
-square_surface_3.fill(square_color_3)
-square_surface_4 = pg.Surface((square_size, square_size))
-square_surface_4.fill(square_color_4)
+gameAir = Air(x,y,size)
+gameFire = Fire(x,y,size)
+gameEarth = Earth(x,y,size)
+gameWater = Water(x,y,size)
 
 # Game loop
 while True:
@@ -58,39 +34,39 @@ while True:
 
             
             # Check if the mouse is over a square
-            if square_x_1 < event.pos[0] < square_x_1 + square_size and \
-               square_y_1 < event.pos[1] < square_y_1 + square_size:
-                dragging_1 = True
+            if gameAir.x < event.pos[0] < gameAir.x + gameAir.size and \
+               gameAir.y < event.pos[1] < gameAir.y + gameAir.size:
+                gameAir.dragging = True
                 # Calculate the offset between the mouse position and the square position
-                offset_x_1 = event.pos[0] - square_x_1
-                offset_y_1 = event.pos[1] - square_y_1
-            # Check if the mouse is over a square
-            elif square_x_2 < event.pos[0] < square_x_2 + square_size and \
-                 square_y_2 < event.pos[1] < square_y_2 + square_size:
-                dragging_2 = True
+                gameAir.offset_x = event.pos[0] - gameAir.x
+                gameAir.offset_y = event.pos[1] - gameAir.y
+
+            elif gameFire.x < event.pos[0] < gameFire.x + gameFire.size and \
+               gameFire.y < event.pos[1] < gameFire.y + gameFire.size:
+                gameFire.dragging = True
                 # Calculate the offset between the mouse position and the square position
-                offset_x_2 = event.pos[0] - square_x_2
-                offset_y_2 = event.pos[1] - square_y_2
-            # Check if the mouse is over a square
-            elif square_x_3 < event.pos[0] < square_x_3 + square_size and \
-                 square_y_3 < event.pos[1] < square_y_3 + square_size:
-                dragging_3 = True
+                gameFire.offset_x = event.pos[0] - gameFire.x
+                gameFire.offset_y = event.pos[1] - gameFire.y
+            
+            elif gameEarth.x < event.pos[0] < gameEarth.x + gameEarth.size and \
+               gameEarth.y < event.pos[1] < gameEarth.y + gameEarth.size:
+                gameEarth.dragging = True
                 # Calculate the offset between the mouse position and the square position
-                offset_x_3 = event.pos[0] - square_x_3
-                offset_y_3 = event.pos[1] - square_y_3
-            # Check if the mouse is over a square
-            elif square_x_4 < event.pos[0] < square_x_4 + square_size and \
-                 square_y_4 < event.pos[1] < square_y_4 + square_size:
-                dragging_4 = True
+                gameEarth.offset_x = event.pos[0] - gameEarth.x
+                gameEarth.offset_y = event.pos[1] - gameEarth.y
+            
+            elif gameWater.x < event.pos[0] < gameWater.x + gameWater.size and \
+               gameWater.y < event.pos[1] < gameWater.y + gameWater.size:
+                gameWater.dragging = True
                 # Calculate the offset between the mouse position and the square position
-                offset_x_4 = event.pos[0] - square_x_4
-                offset_y_4 = event.pos[1] - square_y_4
+                gameWater.offset_x = event.pos[0] - gameWater.x
+                gameWater.offset_y = event.pos[1] - gameWater.y
 
         elif event.type == pg.MOUSEBUTTONUP:
-            dragging_1 = False
-            dragging_2 = False
-            dragging_3 = False
-            dragging_4 = False
+            gameAir.dragging = False
+            gameFire.dragging = False
+            gameEarth.dragging = False
+            gameWater.dragging = False
         elif event.type == pg.MOUSEMOTION:
 
             #if event.pos[0] < 10:
@@ -103,31 +79,37 @@ while True:
             #   pg.mouse.set_pos((mouse_position[0], 470))
 
             # Check if a square is being dragged
-            if dragging_1:
+            if gameAir.dragging:
                 # Move the first square to the mouse position with the offset
-                square_x_1 = event.pos[0] - offset_x_1
-                square_y_1 = event.pos[1] - offset_y_1
-            elif dragging_2:
-                # Move the second square to the mouse position with the offset
-                square_x_2 = event.pos[0] - offset_x_2
-                square_y_2 = event.pos[1] - offset_y_2
-            elif dragging_3:
-                # Move the second square to the mouse position with the offset
-                square_x_3 = event.pos[0] - offset_x_3
-                square_y_3 = event.pos[1] - offset_y_3
-            elif dragging_4:
-                # Move the second square to the mouse position with the offset
-                square_x_4 = event.pos[0] - offset_x_4
-                square_y_4 = event.pos[1] - offset_y_4
+                gameAir.x = event.pos[0] - gameAir.offset_x
+                gameAir.y = event.pos[1] - gameAir.offset_y
+            
+            if gameFire.dragging:
+                # Move the first square to the mouse position with the offset
+                gameFire.x = event.pos[0] - gameFire.offset_x
+                gameFire.y = event.pos[1] - gameFire.offset_y
+            
+            if gameEarth.dragging:
+                # Move the first square to the mouse position with the offset
+                gameEarth.x = event.pos[0] - gameEarth.offset_x
+                gameEarth.y = event.pos[1] - gameEarth.offset_y
+            
+            if gameWater.dragging:
+                # Move the first square to the mouse position with the offset
+                gameWater.x = event.pos[0] - gameWater.offset_x
+                gameWater.y = event.pos[1] - gameWater.offset_y
+
 
     # Clear the screen
-    screen.fill((255, 255, 255))
+    screen.fill((36, 41, 46))
+
+    gameAir.draw(screen)
+    gameFire.draw(screen)
+    gameEarth.draw(screen)
+    gameWater.draw(screen)
 
     # Draw the squares
-    screen.blit(square_surface_1, (square_x_1, square_y_1))
-    screen.blit(square_surface_2, (square_x_2, square_y_2))
-    screen.blit(square_surface_3, (square_x_3, square_y_3))
-    screen.blit(square_surface_4, (square_x_4, square_y_4))
+
     
 
     # Update the screen

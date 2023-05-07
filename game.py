@@ -42,16 +42,9 @@ class Square:
 squares = []
 
 for i in range(amount):
-    #dragging.append(False)
-    #print(dragging)
-
-    #square_colors.append(colors_dict[i]["Color"])
-    #print(square_colors)
-
     x = 100 * i
     y = 100
     size = 50
-    #colors_dict[i]["Color"]= tuple(colors_dict[i]["Color"])
     color = colors_dict[i]["Color"]
     color = tuple(color)
     print(color)

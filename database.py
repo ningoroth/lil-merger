@@ -10,7 +10,6 @@ if os.path.isfile(filename):
     print(f"Connected to database \"{filename}\"")
     conn.close()
 else:
-    os.makedirs(data_path, exist_ok=True)
 
     db = sqlite3.connect(data_path + filename)
     db.execute('CREATE TABLE IF NOT EXISTS Recipies \
